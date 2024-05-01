@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Example Applications | Les miserables</title>
+
+    <style type="text/css">
+      body {
+        background-color: black;
+      }
+      #mynetwork {
+        width: 900px;
+        height: 900px;
+        border: 1px solid beige;
+        background-color: black;
+      }
+      h2 {
+        color: beige;
+        text-align: center;
+      }
+      p {
+        color: beige;
+        text-align: center;
+        white-space: pre-wrap;
+        font-size: small;
+      }
+      div {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
+    ></script>
+
+    <script type="text/javascript">
+      let testData;
+       
+      // test.json 데이터 불러오기 
+      async function fetchData() {
+          try {
+              // test.json 파일을 불러와서 testData에 할당
+              const response = await fetch('test.json');
+              testData = await response.json();
+              // 이후 데이터 처리 작업 수행
+              draw(testData);
+              
+          } catch (error) {
+              console.error('Error:', error);
+          }
+      }
+      
+      function draw(testData) {
+        console.log("draw() 실행됨!")
+        // 데이터 불러오기 함수 호출
+        console.log(testData);
+        var nodes = testData.nodes;
+        var edges = testData.edges;
+        var originalNodeColors = {}; // 노드 ID를 키로하고 원래 색상을 값으로 하는 객체
+
+        nodes.forEach(node => {
+          originalNodeColors[node.id] = node.color;
+        });
+
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var data = {
+          nodes: nodes,
+          edges: edges,
+        };
+        console.log(data);
+        var options = {
+          nodes: {
+            // shape: "dot",
+            size: 100,
+
+          },
+          physics: {
+            forceAtlas2Based: {
+              gravitationalConstant: -26,
+              centralGravity: 0.005,
+              springLength: 230,
+              springConstant: 0.18,
+            },
+            // maxVelocity: 146,
+            // solver: "forceAtlas2Based",
+            // timestep: 0.35,
+            // stabilization: { iterations: 150 },
+          },
+          layout: {
+            improvedLayout: true
+          },
+        };
+        var network = new vis.Network(container, data, options);
+
+      }
+      fetchData();
+    </script>
+  </head>
+
+  <body onload="draw()">
+    <h2 class="container">한자 관계 그래프</h2>
+    <p>한자들 간의 구성 관계를 노드와 엣지 형태의 그래프로 표현하였다.
+      <strong>分 (나눌 분), 页(머리 혈), 齐(가지런할 제), 召(부를 소)</strong> 
+      이렇게 4개의 한자를 기본 한자로 하여 파생되는 한자들을 노드 그래프에 그렸다.
+      마우스를 통해 움직일 수 있고 크기를 키워 한자를 살펴볼 수 있다.
+      </p>
+    <div id="mynetwork" class="container"></div>
+  </body>
+  
+</html>
