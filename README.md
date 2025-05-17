@@ -7,7 +7,7 @@
 
 ## 📸 데모 스크린샷
 
-![한자 관계 그래프](./path-to-hanja-graph-screenshot.png)
+![스크린샷 2025-05-17 153229](https://github.com/user-attachments/assets/49b7b296-bde5-4456-a551-f92363b2fffd)
 
 ---
 
@@ -37,16 +37,3 @@
 
 ---
 
-## 📂 프로젝트 구조
-
-```bash
-.
-├── data/
-│   └── hanja_radicals.json       # 부수 및 한자 관계 데이터
-├── src/
-│   ├── graph.js                  # 그래프 생성 로직
-│   └── styles.css                # 스타일 정의
-├── index.html                    # 메인 페이지
-├── README.md
-└── assets/
-    └── hanja-graph-screenshot.png
